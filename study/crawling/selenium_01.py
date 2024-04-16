@@ -17,11 +17,20 @@ dayList = ["월", "화", "수", "목", "금", "토", "일"]
 
 for day in dayList:
     webtoonDayMenus = driver.find_elements(by=By.CSS_SELECTOR, value='.SubNavigationBar__link--PXX5B')
-    print(webtoonDayMenus)
 
     for menu in webtoonDayMenus:
         if menu.text != day:
             continue
 
         menu.click()
+
         time.sleep(2)
+
+        scrollTop = 0
+        while True:
+            driver.execute_script(f"window.scrollTo(0, {scrollTop})")
+
+            scrollTop += 500
+            time.sleep(1)
+            if scrollTop > driver.execute_script("return document.body.scrollHeight"):
+                break
